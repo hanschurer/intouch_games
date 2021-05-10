@@ -2,6 +2,7 @@ import {React,useState} from 'react'
 import Form from './Form'
 import Confirmation from './Confirmation'
 import Joi from 'joi-browser'
+import SuccessPage from './SuccessPage'
 
 export class SignUpForm extends Form {
 
@@ -14,7 +15,8 @@ export class SignUpForm extends Form {
             DOB: ''
         },
         errors: {},
-        showConfirmation:false
+        showConfirmation:false,
+        success:false
     };
 
 
@@ -43,12 +45,20 @@ export class SignUpForm extends Form {
 
     handleClose=()=>{
         this.setState({showConfirmation:false})
+
+    }
+
+    handleConfirmed=()=>{
+        this.setState({success:true})
     }
 
 
 
-
     render() {
+
+        if(this.state.success){
+            return <SuccessPage />
+        }
 
 
         return (
@@ -62,7 +72,7 @@ export class SignUpForm extends Form {
                     {this.renderInput('DOB', 'Date of Birth', 'date')}
                     {this.renderButton("Sign Up")}
                 </form>
-                <Confirmation show={this.state.showConfirmation} handleClose={this.handleClose} handleShow={this.handleShow} data={this.state.data} />
+                <Confirmation show={this.state.showConfirmation} handleClose={this.handleClose} handleShow={this.handleShow}  handleConfirmed={this.handleConfirmed} data={this.state.data} />
             </div>
         )
     }
