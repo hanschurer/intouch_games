@@ -1,4 +1,4 @@
-import {React,useState} from 'react'
+import {React} from 'react'
 import Form from './Form'
 import Confirmation from './Confirmation'
 import Joi from 'joi-browser'
@@ -15,8 +15,8 @@ export class SignUpForm extends Form {
             DOB: ''
         },
         errors: {},
-        showConfirmation:false,
-        success:false
+        showConfirmation: false,
+        success: false
     };
 
 
@@ -38,42 +38,34 @@ export class SignUpForm extends Form {
     }
 
     doSumbit = () => {
-        this.setState({showConfirmation:true})
-        //Call the server
+        this.setState({ showConfirmation: true })
         console.log(this.state.data);
     }
 
-    handleClose=()=>{
-        this.setState({showConfirmation:false})
-
+    handleClose = () => {
+        this.setState({ showConfirmation: false })
     }
 
-    handleConfirmed=()=>{
-        this.setState({success:true})
+    handleConfirmed = () => {
+        this.setState({ success: true })
     }
-
 
 
     render() {
-
-        if(this.state.success){
-            return <SuccessPage />
-        }
-
-
         return (
-            <div>
-                <h1 className="text-center">Sign Up</h1>
-                <form onSubmit={this.handleSubmit}>
-                    {this.renderInput('username', 'Username')}
-                    {this.renderInput('password', 'Password', 'password')}
-                    {this.renderInput('phone', 'Phone')}
-                    {this.renderInput('email', 'Email')}
-                    {this.renderInput('DOB', 'Date of Birth', 'date')}
-                    {this.renderButton("Sign Up")}
-                </form>
-                <Confirmation show={this.state.showConfirmation} handleClose={this.handleClose} handleShow={this.handleShow}  handleConfirmed={this.handleConfirmed} data={this.state.data} />
-            </div>
+            this.state.success ? <SuccessPage /> :
+                <div>
+                    <h1 className="text-center">Sign Up</h1>
+                    <form onSubmit={this.handleSubmit}>
+                        {this.renderInput('username', 'Username')}
+                        {this.renderInput('password', 'Password', 'password')}
+                        {this.renderInput('phone', 'Phone')}
+                        {this.renderInput('email', 'Email')}
+                        {this.renderInput('DOB', 'Date of Birth', 'date')}
+                        {this.renderButton("Sign Up")}
+                    </form>
+                    <Confirmation show={this.state.showConfirmation} handleClose={this.handleClose} handleConfirmed={this.handleConfirmed} data={this.state.data} />
+                </div>
         )
     }
 }
